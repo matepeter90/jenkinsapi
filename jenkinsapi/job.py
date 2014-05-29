@@ -303,6 +303,12 @@ class Job(JenkinsBase, MutableJenkinsThing):
         # understand the test above.
         return dict((build["number"], build["url"]) for build in builds)
 
+    def get_build_duration_dict(self):
+        durations = dict()
+        for build in self.get_build_ids():
+            durations[build] = self.get_build(build).get_duration()
+        return durations
+
     def get_revision_dict(self):
         """
         Get dictionary of all revisions with a list of buildnumbers (int) that used that particular revision
